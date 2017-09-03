@@ -26,12 +26,11 @@ class Command:
         #react to Enter (code 13)
         if id_ctl==13:
             index_sel = listbox_proc(self.h_list, LISTBOX_GET_SEL)
-            #print('sel', files[index_sel])
             dlg_proc(self.h_dlg, DLG_HIDE)
 
             text = ':'+files[index_sel]+':'
+            #insert at all carets
             ed.cmd(cmds.cCommand_TextInsert, text=text)
-
 
 
     def callback_listbox_drawitem(self, id_dlg, id_ctl, data='', info=''):
@@ -82,12 +81,13 @@ class Command:
 
         global files
         for i in range(len(files)):
-            listbox_proc(self.h_list, LISTBOX_ADD, index=-1, text='?')
+            listbox_proc(self.h_list, LISTBOX_ADD, index=-1, text='')
         listbox_proc(self.h_list, LISTBOX_SET_SEL, index=0)
         listbox_proc(self.h_list, LISTBOX_SET_ITEM_H, index=ICONSIZE)
         listbox_proc(self.h_list, LISTBOX_SET_DRAWN, index=1)
 
         return h
+
 
     def __init__(self):
         self.h_dlg = self.init_dlg()
