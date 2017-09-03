@@ -7,7 +7,7 @@ PICSIZE = 64
 ICONSIZE = 24
 FORMSIZEX = 400
 FORMSIZEY = 350
-COLORLIST = 0xE0E0E0
+COLORLIST = 0xFFFFFF
 COLORSEL = 0xE0A0A0
 
 files = os.listdir(DATADIR)
@@ -19,11 +19,34 @@ img = image_proc(0, IMAGE_CREATE, value=0)
 
 
 class Command:
+    filter = ''
+
+    def update_filter(self):
+        dlg_proc(self.h_dlg, DLG_CTL_PROP_SET, name='filter', prop={'cap': 'Find: '+self.filter})
+
+        global files
+        for (i, item) in enumerate(files):
+            if item.startswith(self.filter):
+                listbox_proc(self.h_list, LISTBOX_SET_SEL, index=i)
+                return
+
 
     def callback_keydown(self, id_dlg, id_ctl, data='', info=''):
         global files
 
-        #react to Enter (code 13)
+        #react to text
+        if (ord('A') <= id_ctl <= ord('Z')) or \
+           (ord('0') <= id_ctl <= ord('9')):
+            self.filter += chr(id_ctl).lower()
+            self.update_filter()
+
+        #react to BackSp
+        if id_ctl==8:
+            if self.filter:
+                self.filter = self.filter[:-1]
+                self.update_filter()
+
+        #react to Enter
         if id_ctl==13:
             index_sel = listbox_proc(self.h_list, LISTBOX_GET_SEL)
             dlg_proc(self.h_dlg, DLG_HIDE)
@@ -69,9 +92,15 @@ class Command:
           'keypreview': True
           })
 
+        n=dlg_proc(h, DLG_CTL_ADD, 'label')
+        dlg_proc(h, DLG_CTL_PROP_SET, index=n, prop={'name': 'filter',
+            'align': ALIGN_TOP,
+            'sp_a': 6,
+            'cap': '',
+            })
+
         n=dlg_proc(h, DLG_CTL_ADD, 'listbox_ex')
         dlg_proc(h, DLG_CTL_PROP_SET, index=n, prop={'name': 'list1',
-            'x':10, 'y':10, 'w':400, 'h': 200,
             'align': ALIGN_CLIENT,
             'sp_a': 6,
             'on_draw_item': self.callback_listbox_drawitem,
@@ -91,6 +120,7 @@ class Command:
 
     def __init__(self):
         self.h_dlg = self.init_dlg()
+        self.update_filter()
 
     def dialog(self):
         dlg_proc(self.h_dlg, DLG_SHOW_MODAL)
