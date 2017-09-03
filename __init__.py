@@ -5,7 +5,7 @@ import cudatext_cmd as cmds
 DATADIR = os.path.dirname(__file__)+os.sep+'emojis'
 PICSIZE = 64
 ICONSIZE = 24
-FORMSIZEX = 400
+FORMSIZEX = 300
 FORMSIZEY = 350
 COLORLIST = 0xFFFFFF
 COLORSEL = 0xE0A0A0
@@ -113,6 +113,7 @@ class Command:
             })
 
         self.h_list = dlg_proc(h, DLG_CTL_HANDLE, index=n)
+        dlg_proc(h, DLG_CTL_FOCUS, index=n)
 
         listbox_proc(self.h_list, LISTBOX_SET_ITEM_H, index=ICONSIZE)
         listbox_proc(self.h_list, LISTBOX_SET_DRAWN, index=1)
