@@ -22,13 +22,14 @@ class Command:
     filter = ''
 
     def update_filter(self):
-        dlg_proc(self.h_dlg, DLG_CTL_PROP_SET, name='filter', prop={'cap': 'Find: '+self.filter})
-
         global files
+        dlg_proc(self.h_dlg, DLG_CTL_PROP_SET, name='filter', prop={'cap': 'Filter: '+self.filter})
+
+        listbox_proc(self.h_list, LISTBOX_DELETE_ALL)
         for (i, item) in enumerate(files):
-            if item.startswith(self.filter):
-                listbox_proc(self.h_list, LISTBOX_SET_SEL, index=i)
-                return
+            if self.filter in item:
+                listbox_proc(self.h_list, LISTBOX_ADD, index=-1, text=item)
+        listbox_proc(self.h_list, LISTBOX_SET_SEL, index=0)
 
 
     def callback_keydown(self, id_dlg, id_ctl, data='', info=''):
@@ -49,9 +50,10 @@ class Command:
         #react to Enter
         if id_ctl==13:
             index_sel = listbox_proc(self.h_list, LISTBOX_GET_SEL)
+            item_text = listbox_proc(self.h_list, LISTBOX_GET_ITEM, index=index_sel)[0]
             dlg_proc(self.h_dlg, DLG_HIDE)
 
-            text = ':'+files[index_sel]+':'
+            text = ':'+item_text+':'
             #insert at all carets
             ed.cmd(cmds.cCommand_TextInsert, text=text)
 
@@ -64,6 +66,7 @@ class Command:
         index = data['index']
         rect = data['rect']
         index_sel = listbox_proc(self.h_list, LISTBOX_GET_SEL)
+        item_text = listbox_proc(self.h_list, LISTBOX_GET_ITEM, index=index)[0]
 
         if index==index_sel:
             back_color = COLORSEL
@@ -74,11 +77,11 @@ class Command:
         canvas_proc(id_canvas, CANVAS_RECT_FILL, x=rect[0], y=rect[1], x2=rect[2], y2=rect[3])
 
         canvas_proc(id_canvas, CANVAS_TEXT,
-            text=files[index],
+            text=item_text,
             x=rect[0] + ICONSIZE+6,
             y=rect[1] + 2 )
 
-        image_proc(img, IMAGE_LOAD, value=DATADIR+os.sep+files[index]+'.png')
+        image_proc(img, IMAGE_LOAD, value=DATADIR+os.sep+item_text+'.png')
         image_proc(img, IMAGE_PAINT_SIZED, value=(id_canvas, rect[0], rect[1], rect[0]+ICONSIZE, rect[1]+ICONSIZE))
 
 
@@ -108,10 +111,6 @@ class Command:
 
         self.h_list = dlg_proc(h, DLG_CTL_HANDLE, index=n)
 
-        global files
-        for i in range(len(files)):
-            listbox_proc(self.h_list, LISTBOX_ADD, index=-1, text='')
-        listbox_proc(self.h_list, LISTBOX_SET_SEL, index=0)
         listbox_proc(self.h_list, LISTBOX_SET_ITEM_H, index=ICONSIZE)
         listbox_proc(self.h_list, LISTBOX_SET_DRAWN, index=1)
 
