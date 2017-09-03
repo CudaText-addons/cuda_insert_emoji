@@ -50,7 +50,10 @@ class Command:
         #react to Enter
         if id_ctl==13:
             index_sel = listbox_proc(self.h_list, LISTBOX_GET_SEL)
-            item_text = listbox_proc(self.h_list, LISTBOX_GET_ITEM, index=index_sel)[0]
+            item = listbox_proc(self.h_list, LISTBOX_GET_ITEM, index=index_sel)
+            if not item: return
+            item_text = item[0]
+
             dlg_proc(self.h_dlg, DLG_HIDE)
 
             text = ':'+item_text+':'
