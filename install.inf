@@ -1,0 +1,12 @@
+[info]
+title=Insert Emoji
+desc=Dialog with list of most common emojis (about 900), to insert emoji's name like :smile:
+type=cudatext-plugin
+subdir=cuda_insert_emoji
+homepage=
+
+[item2]
+section=commands
+caption=Insert Emoji
+method=dialog
+
