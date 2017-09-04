@@ -3,10 +3,9 @@ from cudatext import *
 import cudatext_cmd as cmds
 
 DATADIR = os.path.dirname(__file__)+os.sep+'emojis'
-PICSIZE = 64
-ICONSIZE = 24
+ICONSIZE = 32 #original: 64x64
 FORMSIZEX = 300
-FORMSIZEY = 350
+FORMSIZEY = 400
 COLORLIST = 0xFFFFFF
 COLORSEL = 0xE0A0A0
 
@@ -26,9 +25,12 @@ class Command:
         dlg_proc(self.h_dlg, DLG_CTL_PROP_SET, name='filter', prop={'cap': 'Filter: '+self.filter})
 
         listbox_proc(self.h_list, LISTBOX_DELETE_ALL)
+
         for (i, item) in enumerate(files):
             if self.filter in item:
                 listbox_proc(self.h_list, LISTBOX_ADD, index=-1, text=item)
+
+        listbox_proc(self.h_list, LISTBOX_SET_TOP, index=0)
         listbox_proc(self.h_list, LISTBOX_SET_SEL, index=0)
 
 
@@ -79,10 +81,11 @@ class Command:
         canvas_proc(id_canvas, CANVAS_SET_BRUSH, color=back_color, style=BRUSH_SOLID)
         canvas_proc(id_canvas, CANVAS_RECT_FILL, x=rect[0], y=rect[1], x2=rect[2], y2=rect[3])
 
+        size = canvas_proc(id_canvas, CANVAS_GET_TEXT_SIZE, text=item_text)
         canvas_proc(id_canvas, CANVAS_TEXT,
-            text=item_text,
-            x=rect[0] + ICONSIZE+6,
-            y=rect[1] + 2 )
+            text = item_text,
+            x = rect[0] + ICONSIZE+6,
+            y = (rect[1]+rect[3]-size[1])//2 )
 
         image_proc(img, IMAGE_LOAD, value=DATADIR+os.sep+item_text+'.png')
         image_proc(img, IMAGE_PAINT_SIZED, value=(id_canvas, rect[0], rect[1], rect[0]+ICONSIZE, rect[1]+ICONSIZE))

@@ -1,5 +1,8 @@
 
-2017.09.03.2
+2017.09.04
+- fix incorrect scroll on filter change
+- fix vert-centering of text items
++ make icon size bigger
 + make "Filter" field instead of "Find"
 
 2017.09.03
