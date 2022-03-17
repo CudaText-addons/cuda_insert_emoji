@@ -1,3 +1,5 @@
+2022.03.17
++ added insert of unicode-emoji 😀
 
 2017.09.04
 - fix incorrect scroll on filter change
