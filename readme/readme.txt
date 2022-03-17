@@ -1,13 +1,19 @@
-plugin for CudaText.
-it shows list of common emoji with pictures (about 1800 items in list).
+Plugin for CudaText.
+It shows list of common emoji with pictures (about 1800 items).
+Supports multi-carets.
 
-- Enter key: insert emoji selected in listbox, like :smile:. supports multi-carets.
-- Esc key: cancel dialog.
-- text keys, digits, BackSpace: edit filter string (it's shown on top of dialog). filter string leaves only items, which contain filter.
+Hotkeys in the list dialog:
+- Enter key: insert emoji selected in the listbox, like :smile:.
+- Esc key: cancel the dialog.
+- text keys, digits, BackSpace: edit filter string (it's shown on top of dialog). Filter string leaves only items, which contain the string.
 
-emoji list+icons are taken from 
+Emoji list+icons are taken from:
 https://www.webpagefx.com/tools/emoji-cheat-sheet/
+
+Russian emoji codes+descriptions are taken from:
 https://www.emojiall.com/ru/all-emojis
 
-author: Alexey T (CudaText), ildar r. khasanshin (https://github.com/ildarkhasanshin)
-license: MIT
+Authors:
+  Alexey Torgashin (CudaText)
+  ildar r. khasanshin (https://github.com/ildarkhasanshin)
+License: MIT
