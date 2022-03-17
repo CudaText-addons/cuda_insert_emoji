@@ -1,5 +1,5 @@
 2022.03.17
-+ added insert of unicode-emoji 😀
++ added command to insert emoji unicode-text e.g. 😀 (patch by Ildar)
 
 2017.09.04
 - fix incorrect scroll on filter change
