@@ -1,4 +1,5 @@
 import os
+import json
 from cudatext import *
 import cudatext_cmd as cmds
 
@@ -22,8 +23,7 @@ def unicode_(self, file_):
     except OSError as err:
         msg_box("OS error: {0}".format(err), MB_OK)
         raise
-    
-    import json
+
     data_ = json.load(f)
     list_ = ''
     emojis_ = []
@@ -33,11 +33,12 @@ def unicode_(self, file_):
         list_ = list_ + i['emoji'] + ' ' + i['name'] + code_ + keywords_ + "\n"
         emojis_.append(i['emoji'])
     f.close()
-    
+
     res_ = dlg_menu(DMENU_LIST_ALT, list_, 0, 'List of emojis', CLIP_RIGHT)
-    
-    import cudatext_cmd as cmds
+    if res_ is None: return
+
     ed.cmd(cmds.cCommand_TextInsert, text=str(emojis_[res_]))
+
 
 class Command:
     filter = ''
@@ -155,6 +156,6 @@ class Command:
 
     def unicode_en(self):
         unicode_(self, 'data_en.json')
-    
+
     def unicode_ru(self):
         unicode_(self, 'data_ru.json')
