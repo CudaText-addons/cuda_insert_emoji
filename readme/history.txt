@@ -1,3 +1,7 @@
+2022.03.18
++ en-descriptions
++ root menuitem in plugins with 3 sub-items
+
 2022.03.17
 + added insert of unicode-emoji 😀
 

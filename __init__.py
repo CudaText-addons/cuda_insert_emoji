@@ -16,6 +16,28 @@ print('Emojis found:', len(files))
 
 img = image_proc(0, IMAGE_CREATE, value=0)
 
+def unicode_(self, file_):
+    try:
+        f = open(os.path.dirname(os.path.realpath(__file__)) + '/' + file_)
+    except OSError as err:
+        msg_box("OS error: {0}".format(err), MB_OK)
+        raise
+    
+    import json
+    data_ = json.load(f)
+    list_ = ''
+    emojis_ = []
+    for i in data_:
+        code_ = ' (' + i['code'] + ')' if i['code'] != '' else ''
+        keywords_ = "\t" + i['keywords'] if i['keywords'] != '' else ''
+        list_ = list_ + i['emoji'] + ' ' + i['name'] + code_ + keywords_ + "\n"
+        emojis_.append(i['emoji'])
+    f.close()
+    
+    res_ = dlg_menu(DMENU_LIST_ALT, list_, 0, 'List of emojis', CLIP_RIGHT)
+    
+    import cudatext_cmd as cmds
+    ed.cmd(cmds.cCommand_TextInsert, text=str(emojis_[res_]))
 
 class Command:
     filter = ''
@@ -130,26 +152,9 @@ class Command:
 
     def dialog(self):
         dlg_proc(self.h_dlg, DLG_SHOW_MODAL)
+
+    def unicode_en(self):
+        unicode_(self, 'data_en.json')
     
-    def unicode(self):
-        try:
-            f = open(os.path.dirname(os.path.realpath(__file__)) + '/data.json')
-        except OSError as err:
-            msg_box("OS error: {0}".format(err), MB_OK)
-            raise
-        
-        import json
-        data_ = json.load(f)
-        list_ = ''
-        emojis_ = []
-        for i in data_:
-            code_ = ' (' + i['code'] + ')' if i['code'] != '' else ''
-            keywords_ = "\t" + i['keywords'] if i['keywords'] != '' else ''
-            list_ = list_ + i['emoji'] + ' ' + i['name'] + code_ + keywords_ + "\n"
-            emojis_.append(i['emoji'])
-        f.close()
-        
-        res_ = dlg_menu(DMENU_LIST_ALT, list_, 0, 'List of emojis', CLIP_RIGHT)
-        
-        import cudatext_cmd as cmds
-        ed.cmd(cmds.cCommand_TextInsert, text=str(emojis_[res_]))
+    def unicode_ru(self):
+        unicode_(self, 'data_ru.json')

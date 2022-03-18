@@ -7,10 +7,15 @@ homepage=https://github.com/CudaText-addons/cuda_insert_emoji
 
 [item1]
 section=commands
-caption=Insert Emoji (unicode)
-method=unicode
+caption=&Insert Emoji\Insert code from &picture list
+method=dialog
 
 [item2]
 section=commands
-caption=Insert Emoji (code)
-method=dialog
+caption=&Insert Emoji\Insert unicode (&En descriptions)
+method=unicode_en
+
+[item3]
+section=commands
+caption=&Insert Emoji\Insert unicode (&Ru descriptions)
+method=unicode_ru
