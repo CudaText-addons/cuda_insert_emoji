@@ -19,7 +19,7 @@ img = image_proc(0, IMAGE_CREATE, value=0)
 
 def unicode_(self, file_):
     try:
-        f = open(os.path.dirname(os.path.realpath(__file__)) + '/' + file_)
+        f = open(os.path.dirname(os.path.realpath(__file__)) + os.sep + file_)
     except OSError as err:
         msg_box("OS error: {0}".format(err), MB_OK)
         raise
