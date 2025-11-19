@@ -1,3 +1,6 @@
+2025.11.20
+- fix: avoid deprecated API
+
 2025.10.02
 + add: update emoji-unicode-database to latest (by @ildarkhasanshin)
 
