@@ -75,9 +75,9 @@ class Command:
         #react to Enter
         if id_ctl==13:
             index_sel = listbox_proc(self.h_list, LISTBOX_GET_SEL)
-            item = listbox_proc(self.h_list, LISTBOX_GET_ITEM, index=index_sel)
+            item = listbox_proc(self.h_list, LISTBOX_GET_ITEM_PROP, index=index_sel)
             if not item: return
-            item_text = item[0]
+            item_text = item['text']
 
             dlg_proc(self.h_dlg, DLG_HIDE)
 
@@ -94,7 +94,7 @@ class Command:
         index = data['index']
         rect = data['rect']
         index_sel = listbox_proc(self.h_list, LISTBOX_GET_SEL)
-        item_text = listbox_proc(self.h_list, LISTBOX_GET_ITEM, index=index)[0]
+        item_text = listbox_proc(self.h_list, LISTBOX_GET_ITEM_PROP, index=index)['text']
 
         if index==index_sel:
             back_color = COLORSEL
