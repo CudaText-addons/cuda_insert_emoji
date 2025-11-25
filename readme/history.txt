@@ -1,3 +1,6 @@
+2025.11.25
++ add: update keywords in emoji-unicode-database (by @ildarkhasanshin)
+
 2025.11.20
 - fix: avoid deprecated API
 
